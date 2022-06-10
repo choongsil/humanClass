@@ -414,7 +414,8 @@ option {
 						&& $('#recnt2').val() != '0'
 						&& $('#name').val() != ''
 						&& $('#mobile').val() != ''
-						&& $('#recnt2').val() <= $('#reroomtype option:selected').val()) {
+						&& $('#recnt2').val() <= $('#reroomtype option:selected').val()
+						&& $('#recnt2').val()<10) {
 					$.ajax({
 						type : 'get',
 						url : 'reserveadd',
@@ -446,7 +447,8 @@ option {
 						&& $('#recnt2').val() <= $(
 								'#reroomtype option:selected').val()
 						&& $('#recnt2').val() != '0' && $('#name').val() != ''
-						&& $('#mobile').val() != '') {
+						&& $('#mobile').val() != ''
+						&& $('#recnt2').val()<10) {
 					$.ajax({
 						type : 'get',
 						url : 'uptodate',
