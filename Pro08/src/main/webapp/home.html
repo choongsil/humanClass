@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Member Management</title>
+</head>
+<body align=center>
+	<h1>수출품목 관리</h1>
+	<table align=center border=1>
+		<tr>
+			<td>Country</td>
+			<td><input type=text name=id id=country><input
+				type=hidden id=opflag></td>
+		</tr>
+		<tr>
+			<td>Seq No.</td>
+			<td><input type=text name=password id=seqno></td>
+		</tr>
+		<tr>
+			<td>Good name</td>
+			<td><input type=text name=name id=goodname></td>
+		</tr>
+		<tr>
+			<td colspan=2 align=center><input type=submit value=AddNew
+				id=btnAddnew> <input type=button id=btnReset value=비우기></td>
+		</tr>
+	</table>
+	<table id=tblData border=1 align=center>
+	</table>
+</body>
+<script src='https://code.jquery.com/jquery-3.4.1.js'></script>
+<script>
+	$(document).ready(function() {
+		loadData();
+	})
+	.on('click', '#btnAddnew', function() {
+		addnew();
+	
+	}).on('click', '#btnReset', function() {
+		$('#country').val('');
+		$('#seqno').val('');
+		$('#goodname').val('');
+		$('#btnAddnew').val('AddNew');
+	}).on(
+			'click',
+			'#btnDelete',
+			function() {
+				let country = $(this).parent().parent().find('td:first').text();
+				let goods = $(this).parent().parent().find('td').eq(2).text();
+				let seq = $(this).parent().parent().find('td').eq(1).text();
+				let ndx = $(this).parent().parent().index();
+				console.log(country);
+				console.log(seq);
+				console.log($(this).parent().parent().find('td').eq(2).text());
+				$.ajax({
+					type : 'get',
+					url : 'Delete',
+					data : {
+						country : country,
+						goods : goods,
+						seq : seq
+					},
+					dataType : 'text',
+					success : function() {
+						$('#tblData').find('tr:eq(' + ndx + ')').remove(), 
+						$('#country').val(''),$('#seqno').val(''), $('#goodname').val(''),
+						$('#btnAddnew').val('AddNew')
+
+					},
+					error : function() {
+						alert('삭제 실패');
+					},
+					complete : function() {
+					}
+
+				})
+			}).on('click', '#tblData tr', function() {
+		let country = $(this).find('td:eq(0)').text();
+		let seq = $(this).find('td:eq(1)').text();
+		let goods = $(this).find('td:eq(2)').text();
+		$('#country').val(country);
+		$('#seqno').val(seq);
+		$('#goodname').val(goods);
+		$('#btnAddnew').val('Update');
+	})
+	function loadData() { //웹페이지 실행시 표불러오기
+		$.ajax({
+			type : 'get',
+			url : 'List',
+			data : '',
+			dataType : 'text',
+			success : function(data) {
+				$('#tblData').empty().append(data)
+
+			},
+			error : function() {
+			},
+			complete : function() {
+			}
+		});
+	}
+	function addnew() {
+		$.ajax({
+			type : 'get',
+			url : 'Addnew',
+			data : {
+				country : $('#country').val(),
+				seqno : $('#seqno').val(),
+				goods : $('#goodname').val()
+
+			},
+			dataType : 'text',
+			success : function() {
+				loadData(), $('#country').val(''), $('#seqno').val(''), 
+				$('#goodname').val(''), $('#btnAddnew').val('AddNew')
+
+			},
+			error : function() {
+
+			},
+			complete : function() {
+			},
+		})
+	}
+	function update() {
+		$.ajax({
+			type : 'get',
+			url : 'Update',
+			data : {
+				country : $('#country').val(),
+				seqno : $('#seqno').val(),
+				goods : $('#goodname').val()
+
+			},
+			dataType : 'text',
+			success : function() {
+				loadData();
+				$('#country').val(''), $('#seqno').val(''), 
+				$('#goodname').val(''), $('#btnAddnew').val('AddNew')
+			},
+			error : function() {
+
+			},
+			complete : function() {
+			},
+		})
+	}
+</script>
+</html>

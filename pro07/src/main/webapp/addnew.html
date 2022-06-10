@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Member Management</title>
+</head>
+<h1>멤버관리</h1>
+<body align=center>
+	<table align=center border=1 style="border-collapse: collapse;">
+		<tr>
+			<td>ID</td>
+			<td><input type=text name=id id=userid><input
+				type=hidden id=opflag></td>
+		</tr>
+		<tr>
+			<td>비밀번호</td>
+			<td><input type=text name=password id=passcode></td>
+		</tr>
+		<tr>
+			<td>이름</td>
+			<td><input type=text name=name id=username></td>
+		</tr>
+		<tr>
+			<td>모바일</td>
+			<td><input type=text name=mobile id=mobile></td>
+		</tr>
+		<tr>
+			<td>등록일</td>
+			<td><input type=date name=joindate id=joindate></td>
+		</tr>
+		<tr>
+			<td colspan=2align=center><input type=button value='AddNew'
+				id=btnAddnew> <input type=button value='비우기' id=btnReset></td>
+		</tr>
+	</table>
+	<br>
+	<table id=tblData border=1 align=center
+		style="border-collapse: collapse;">
+	</table>
+
+</body>
+<script src='https://code.jquery.com/jquery-3.4.1.js'></script>
+<script>
+	$(document).ready(function() {
+		loadData();
+	}).on(
+			'click',
+			'#btnAddnew',
+			function() {
+				if ($(this).val() == 'AddNew') {
+					$.ajax({
+						type : 'get',
+						url : 'addnew',
+						data : 'password=' + $('#passcode').val() + '&id='
+								+ $('#userid').val() + '&name='
+								+ $('#username').val() + '&mobile='
+								+ $('#mobile').val() + '&joindate='
+								+ $('#joindate').val(),
+						dataType : 'text',
+						success : function() {
+							loadData();
+							$('#userid').prop('readonly',false);
+
+						},
+						error : function() {
+
+						},
+						complete : function() {
+						},
+					})
+				} else if ($(this).val() == 'Update') {
+					$.ajax({
+						type : 'post',
+						url : 'modify',
+						data : {
+							password : $('#passcode').val(),
+							id : $('#userid').val(),
+							name : $('#username').val(),
+							mobile : $('#mobile').val(),
+							joindate : $('#joindate').val()
+						},
+						dataType : 'text',
+						success : function() {
+							loadData();
+							$('#btnAddnew').val('AddNew');
+						},
+						error : function() {
+						},
+						complete : function() {
+
+						}
+					})
+
+				}
+			}).on('click', '#btnReset', function() {
+		$('#btnAddnew').val('AddNew');
+		$('#userid,#username,#passcode,#mobile,#joindate').val('');
+		$('#userid').prop('readonly',false);
+
+	}).on('click', '#btnDelete', function() {
+		let answer = confirm('정말로 지우시겠습니까?');
+		if (!answer)
+			return false;
+		let id = $(this).parent().parent().find('td:first').text();
+		let ndx = $(this).parent().parent().index();
+		$.ajax({
+			type : 'get',
+			url : 'delete',
+			data : 'id=' + id,
+			dataType : 'text',
+			success : function() {
+				$('#tblData').find('tr:eq(' + ndx + ')').remove();
+
+			},
+			error : function() {
+				alert('삭제 실패');
+			},
+			complete : function() {
+			}
+		});
+	}).on('click', '#tblData tr', function() {
+		let id = $(this).find('td:eq(0)').text();
+		let passcode = $(this).find('td:eq(1)').text();
+		let name = $(this).find('td:eq(2)').text();
+		let mobile = $(this).find('td:eq(3)').text();
+		let joindate = $(this).find('td:eq(4)').text();
+		$('#userid').val(id);
+		$('#passcode').val(passcode);
+		$('#username').val(name);
+		$('#mobile').val(mobile);
+		$('#joindate').val(joindate);
+		$('#btnAddnew').val('Update');
+		$('#userid').prop('readonly', true);
+	})
+	function loadData() {
+		$.ajax({
+			type : 'get',
+			url : 'list',
+			data : '',
+			dataType : 'text',
+			success : function(data) {
+				$('#tblData').empty().append(data);
+				$('#userid,#username,#passcode,#mobile,#joindate').val('');
+
+			},
+			error : function() {
+			},
+			complete : function() {
+			}
+		});
+	}
+</script>
+</html>

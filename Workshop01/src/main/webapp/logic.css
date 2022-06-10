@@ -1,0 +1,51 @@
+@charset "EUC-KR";
+@import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
+
+table {
+    margin: auto;
+    width: 600px;
+    height: 400px;
+    font-family: 'Cute Font', cursive;
+    font-size: 40px;
+    border-collapse: separate;
+    border-radius: 20px;
+    border-style: ridge;
+    border-width: 10px;
+    background-color: gray;
+    color: white;
+
+}
+
+
+caption {
+    font-size: 60px;
+    font-family: 'Cute Font', cursive;
+    text-align: center;
+    color: black;
+}
+
+#sub,
+#res {
+    font-size: 40px;
+    width: 100px;
+    height: 60px;
+    outline-style: groove;
+}
+
+input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+input[type=radio] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+body {
+    background-color: rgb(224,224,224);
+}

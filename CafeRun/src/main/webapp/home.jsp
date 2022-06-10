@@ -1,0 +1,454 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카페주문관리</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" href="cofee2.css">
+</head>
+
+<body align="center">
+    <h1>카페주문관리</h1>
+    <table id="tbl">
+        <td>
+            <table>
+                <label>
+                    <div style="text-align: center; background-color: black; color: white;">
+                        메뉴목록</div>
+                </label>
+                <tr>
+                    <td rowspan="6" style="border-bottom: none; border-left: none; border-right: none;">
+                        <select id="menu" size="5" multiple style="font-size: 40px;">
+
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                </tr>
+                <tr id="over">
+                    <td rowspan="3" valign="top"
+                        style="border-bottom: none; border-left: none; border-right: none; border-top: none;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;메뉴<input type="text" id="menuName" style='height: 40px;'><br> <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;수량<input type="number" id="qty" style="height: 40px;"
+                            min="1">잔<br> <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가격<input type="number" id="price"
+                            style="height: 40px;">원<br>
+                        <br>
+                        <p align="center">
+                            <input type="button" id="plus" value="추가" style="WIDTH: 70px; HEIGHT: 50px"> <input
+                                type="button" id="clear" value="취소" style="WIDTH: 70px; HEIGHT: 50px">
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                </tr>
+
+            </table>
+        </td>
+        <td valign="top">
+            <table>
+                <label>
+                    <div>주문목록</div>
+                </label>
+                <tr>
+                    <td rowspan="6"
+                        style="border-bottom: none; border-left: none; border-right: none; border-top: none;">
+                        <select size="6" style="font-size: 40px;" id="order" multiple valign="top">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <td rowspan="3" valign="top"
+                        style="height: 70px; border-bottom: none; border-left: none; border-right: none; border-top: none;">
+                        <br> <br> &nbsp;모바일번호&nbsp;<input type="text" id="mobile" style="height: 40px;"><br> <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;총액&nbsp;&nbsp;&nbsp;<input type="number" id="sum"
+                            style="height: 40px;" min="1">원<br>
+                        <br>
+                        <p align="center">
+                            <input type="button" value="주문완료" id="com" style="WIDTH: 70px; HEIGHT: 50px"> <input
+                                type="button" value="취소" id="del" style="WIDTH: 70px; HEIGHT: 50px">
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                </tr>
+            </table>
+        </td>
+        <td valign=top>
+            <table>
+                <label>
+                    <div>매출</div>
+                </label>
+                <tr>
+                    <td rowspan="6"
+                        style="border-bottom: none; border-left: none; border-right: none; border-top: none;">
+                        <select size="6" style="font-size: 25px;" multiple id="row" valign="top"></select>
+                    </td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                    <td rowspan="3" valign="bottom"
+                        style="border-bottom: none; border-left: none; border-right: none; border-top: none;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;매출합계&nbsp;<input type="text" id="sales" style="height: 40px;">원
+                    </td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+
+                </tr>
+            </table>
+        </td>
+    </table>
+    <a href="#" id="btnMenu">메뉴관리</a>
+    <div id="dvMenu" style="display: none; font-size: 20px;">
+        <table>
+            <tr>
+                <td style="border-bottom: none; border-top: none; border-left: none; border-right: none;">
+                    <select id="selMenu1" size="12" style="width: 100%;">
+                    </select>
+                </td>
+                <td style="vertical-align: top;"><input type="hidden" id="optype" value="add" readonly>
+                    <table style="width: auto;">
+                        <tr>
+                            <td
+                                style="border-bottom: none; border-top: none; border-left: none; border-right: none; font-size: xx-large;">
+                                메뉴명&nbsp;<input type="text" id="_name" size="12" style="height: auto;"></td>
+                        </tr>
+                        <tr>
+                            <td
+                                style="border-bottom: none; border-top: none; border-left: none; border-right: none; font-size: xx-large;">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가격&nbsp;<input type="text" id="_price" min="1"
+                                    max="99999" style="height: 40px; width: 150px;">원
+                            </td>
+                        <tr>
+                            <td style="border-bottom: none; border-top: none; border-left: none; border-right: none;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom: none; border-top: none; border-left: none; border-right: none;">
+                                <button id="btnAdd">등록</button>&nbsp;
+                                <button id="btnDelete">삭제</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom: none; border-top: none; border-left: none; border-right: none;">
+                                <button id="btnRemove">지우기</button>&nbsp;
+                                <button id="btnCancel">종료</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+<script>
+    $(document)
+        .ready(function () {
+            totalPrice();
+            loadData_1();
+            
+            $('input[type=text]').css('font-size', '17px');
+            $('input[type=text]').css('text-align', 'center');
+            $('input[type=number]').css('font-size', '17px');
+            $('input[type=number]').css('text-align', 'center');
+            $('input[type=button]').css('font-family', 'cute font');
+            $('input[type=button]').css('font-size', '25px');
+            $("#dvMenu").dialog({
+                autoOpen: false,
+                width: 'auto', height: 'auto',
+                open: function (event, ui) {
+                    loadData();
+
+                },
+                close: function (event, ui) {
+                	loadData_1();
+                 
+                }
+            })
+        })
+
+    
+    $(document)
+        .on('click', '#menu option', function () {
+            let str = $('#menu option:selected').text();
+            let ar = str.split(',')
+            $('#menuName').val(ar[0]);
+            y = parseInt(ar[1]);
+            $('#price').val(y);
+            $('#qty').val(1);
+        })
+        .on('click', '#qty', function () {
+            let x = parseInt($('#qty').val());
+            $('#price').val(x * y);
+            let k = $('#price').val(x * y);
+        })
+        .on('click', '#plus', function () {
+        	if($('#menuName').val()!=''){
+        	let p = new Array();
+            let q = 0;
+            let m = 0;
+            z = $('#menuName').val() + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp' + ',' + $('#qty').val() + '&nbsp;&nbsp;&nbsp;&nbsp' + ',' + $('#price').val() + '원'
+            $('#order').append("<option value=" + $('#menu option:selected').val() + ">" + z + "</option>");
+            console.log($('#menu option:selected').val());
+            a = $('#price').val();
+            p.push(a)
+            for (i = 0; i < p.length; i++) {
+                q = parseInt(p[i]);
+                m += q;
+            }
+            $('#sum').val(m);
+            $('#clear').trigger('click');
+        	}
+        })
+        .on('click', '#clear', function () {
+            $('#menuName').val('');
+            $('#qty').val('');
+            $('#price').val('');
+        })
+        .on('click', '#com', function () {
+            if ($('#mobile').val() == '') {
+                $('#mobile').val('--------');
+            }
+
+            for (let i = 0; i < $('#order option').length; i++) {
+                let c = $('#order option:eq(' + i + ')').text().split(',');
+                $.ajax({
+
+                    type: 'get',
+                    url: 'Income',
+                    data: {
+
+                        mobile: $('#mobile').val(),
+                        seqno: $('#order option:eq(' + i + ')').val(),
+                        qty: parseInt(c[1]),
+                        price: parseInt(c[2])
+
+                    },
+                    success: function () {
+                    	totalPrice();
+                    	totalSale();
+                    	$('#order').empty();
+                        $('#sum').val('');
+                        $('#mobile').val('');
+                    },
+                    error: function () { },
+                    complete: function () { }
+
+                })
+            }
+                        
+            
+            
+
+        })
+        .on('click', '#del', function () {
+            $('#order').empty();
+            $('#sum').val('');
+        })
+        .on('click', '#btnMenu', function () {
+            $("#dvMenu").dialog('open');
+        })
+        .on('click', '#btnCancel', function () {
+            $("#dvMenu").dialog('close');
+            return false;
+        })
+        .on('click', '#selMenu1 option', function () {
+            let str = $(this).text();
+            let ar = str.split(',');
+            $('#_name').val(ar[0]);
+            $('#_price').val(parseInt(ar[1]));
+            $('#optype').val('update');
+            return false;
+        })
+        .on('click', '#btnDelete', function () {
+            $.ajax({
+                type: 'get', url: 'Delete', data: { 'name': $('#_name').val() },
+                success: function () {
+                    loadData(),
+                        $('#_name').val(''),
+                        $('#_price').val(''),
+                        $('#optype').val('add')
+                },
+                error: function () {
+                },
+                complete: function () {
+                }
+            })
+            return false;
+        })
+        .on('click', '#btnRemove', function () {
+            $('#_name').val('');
+            $('#_price').val('');
+            $('#optype').val('add');
+            return false;
+        })
+        .on('click', '#btnAdd', function () {
+            if ($('#optype').val() == 'update') {
+                $.ajax({
+                    type: 'get',
+                    url: 'menuUpdate',
+                    data: {
+                        menuName: $('#_name').val(),
+                        menuPrice: $('#_price').val(),
+                        sqnum: $('#selMenu1 option:selected').val()
+
+                    },
+                    dataType: 'text',
+                    success: function () {
+                        $('#_name').val(''),
+                            $('#_price').val(''),
+                            $('#optype').val('add'),
+                            loadData()
+
+                    },
+                    error: function () { },
+                    complete: function () { }
+
+                })
+            }
+            else if ($('#optype').val() == 'add') {
+                $.ajax({
+                    type: 'get',
+                    url: 'add',
+                    data: { 'name': $('#_name').val(), 'price': $('#_price').val() },
+                    dataType: 'text',
+                    success: function () {
+                        $('#_name,#_price').val(''),
+                            $('#_price').val(''),
+                            loadData()
+                    },
+                    error: function () {
+                    },
+                    complete: function () {
+                    }
+                })
+
+            }
+        })
+    function loadData() {
+        $.ajax({
+            type: 'get', url: 'menulist', data: '',
+            dataType: 'json',
+            success:function(data){
+    			$('#selMenu1').empty();
+    			for(let i=0;i<data.length;i++){
+    				let jo=data[i]
+    				let str='<option value='+jo['seqno']+'>'+jo['name']+','+jo['price']+'</option>';
+    				$('#selMenu1').append(str);
+    			}
+    		},
+    		error:function(){
+    			
+    		},
+    		complete:function(){
+    			
+    		}
+        })
+
+    } 
+    function loadData_1(){
+    	$.ajax({
+    		type:'get', dataType:'json',url:'menulist',
+    		success:function(data){
+    			$('#menu').empty();
+    			for(let i=0;i<data.length;i++){
+    				let jo=data[i];
+    				let str='<option value='+jo['seqno']+'>'+jo['name']+','+jo['price']+'</option>';
+    				$('#menu').append(str);
+    			}
+    		},
+    		error:function(){
+    			
+    		},
+    		complete:function(){
+    			
+    		}
+    	});
+    }
+    
+    function totalPrice() {
+        $.ajax({
+            type: 'get',
+            url: 'total',
+            data: '',
+            dataType: 'json',
+            success: function (data) {
+            	$('#row').empty();
+            	for(let i=0;i<data.length;i++){
+            		let jo=data[i];
+            		let str='<option>'+jo['mobile']+jo['name']+','+jo['qty']+','+jo['price']+'원'+jo['date']+'</option>';
+            		$('#row').append(str);
+            	}
+                
+                totalSale();
+
+            },
+            error: function () {
+            },
+            complete: function () {
+            }
+        })   
+    }
+    function totalSale() {
+            $.ajax({
+            	type:'get', url:'Getsum',dataType:'json',
+            	success:function(data){
+            		let jo=data[0];
+            		$('#sales').val(jo['sum']);
+            	}
+            })
+        }
+    
+
+</script>
+
+</html>
