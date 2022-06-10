@@ -119,26 +119,30 @@ option {
 					<div>
 						<div>
 							<li><input type="number" id='recnt' class="form-control"
-								style="width: 150px; display: inline-block; text-align: right;" min=1>명</li>
+								style="width: 150px; display: inline-block; text-align: right;"
+								min=1>명</li>
 						</div>
 					</div>
 				</ul>
 				<div>
 					<h5>객실종류</h5>
 					<ul>
-						<li><select id='reroomtype' class="form-select form-select-sm"
+						<li><select id='reroomtype'
+							class="form-select form-select-sm"
 							aria-label=".form-select-sm example" style="width: 150px;">
 						</select></li>
 					</ul>
 				</div>
 				<div style="text-align: center;">
-					<input type="button" value="찾기" id='find' class="btn btn-outline-primary">
+					<input type="button" value="찾기" id='find'
+						class="btn btn-outline-primary">
 				</div>
 				<div>
 					<h5>예약가능객실</h5>
 					<div style="text-align: center;">
 						<ul>
-							<select id='reroomlist' class="form-control"  style="width: 100%; height:450px;" multiple></select>
+							<select id='reroomlist' class="form-control"
+								style="width: 100%; height: 450px;" multiple></select>
 						</ul>
 					</div>
 				</div>
@@ -177,9 +181,11 @@ option {
 					<div style="white-space: nowrap;">
 						<ul>
 							<li><input type="text" id='date3' class="form-control"
-								style="width: 110px;font-size:10px; display: inline-block;" readonly>~<input
-								type="text" id='date4' class="form-control"
-								style="width: 110px;font-size:10px; display: inline-block;" readonly></li>
+								style="width: 110px; font-size: 10px; display: inline-block;"
+								readonly>~<input type="text" id='date4'
+								class="form-control"
+								style="width: 110px; font-size: 10px; display: inline-block;"
+								readonly></li>
 						</ul>
 					</div>
 				</div>
@@ -201,22 +207,25 @@ option {
 					<h6>숙박총액</h6>
 					<ul>
 						<li><input type="text" id='sum' class="form-control"
-							style="width: 170px; display: inline-block;text-align:right;">원</li>
+							style="width: 170px; display: inline-block; text-align: right;">원</li>
 					</ul>
 				</div>
 				<div style="text-align: center;">
-					<input type="button" value="예약등록" id='addreserve' class="btn btn-outline-primary">
-					<input type="button" value="예약취소" id='deletereserve' class="btn btn-outline-primary">
+					<input type="button" value="예약등록" id='addreserve'
+						class="btn btn-outline-primary"> <input type="button"
+						value="예약취소" id='deletereserve' class="btn btn-outline-primary">
 				</div>
 				<div style="text-align: center; padding-top: 10px">
-					<input type="button" value="비우기" id='clearn2' class="btn btn-outline-primary">
+					<input type="button" value="비우기" id='clearn2'
+						class="btn btn-outline-primary">
 				</div>
 			</div>
 			<div class="col-md-4" id="round">
 				<div style="padding-top: 50px;">
 					<h4>예약내역</h4>
 				</div>
-				<select  id='reroomlist2' class="form-control" style="width: 100%;height:700px;" multiple></select>
+				<select id='reroomlist2' class="form-control"
+					style="width: 100%; height: 700px;" multiple></select>
 			</div>
 		</div>
 	</div>
@@ -246,7 +255,7 @@ option {
 			width : '700px',
 			height : 'auto',
 			open : function(event, ui) {
-				
+
 			},
 			close : function(event, ui) {
 				noreserve();
@@ -314,7 +323,7 @@ option {
 		}
 	})
 	//삭제 버튼
-	.on('click','#roomdelete',function(){
+	.on('click', '#roomdelete', function() {
 		$.ajax({
 			type : 'get',
 			url : 'deleteroom',
@@ -333,7 +342,7 @@ option {
 		})
 	})
 	//객실관리비우기 버튼
-	.on('click','#clear',function(){
+	.on('click', '#clear', function() {
 		$('#roomnum').val('');
 		$('#room_name').val('');
 		$('#room_type').val('');
@@ -341,19 +350,19 @@ option {
 		$('#price').val('');
 		$('#roomadd').val('등록');
 	})
-	
-	.on('click','#find',function(){
-		 noreserve();
-		 reserveroom();
+
+	.on('click', '#find', function() {
+		noreserve();
+		reserveroom();
 	})
 	//예약내역 클릭시
-	.on('click','#reroomlist2 option:selected',function(){
+	.on('click', '#reroomlist2 option:selected', function() {
 		$.ajax({
 			type : 'get',
 			url : 'update',
-			data:{
-				renum:$('#reroomlist2 option:selected').val(),
-				
+			data : {
+				renum : $('#reroomlist2 option:selected').val(),
+
 			},
 			dataType : 'json',
 			success : function(data) {
@@ -370,100 +379,109 @@ option {
 					$('#sum').val(jo['price']), //가격
 					$('#addreserve').val('예약수정') //예약등록버튼 예약수정으로
 				}
-				
+
 			}
 		})
 	})
 	//예약 가능 객실 클릭시
-	.on('click','#reroomlist option:selected',function(){
-		let ar=$('#reroomlist option:selected').text().split(' ');
-		let ar1=$('#date1').val().split('-');
-		let ar2=$('#date2').val().split('-');
-		
+	.on('click', '#reroomlist option:selected', function() {
+		let ar = $('#reroomlist option:selected').text().split(' ');
+		let ar1 = $('#date1').val().split('-');
+		let ar2 = $('#date2').val().split('-');
+
 		let da1 = new Date(ar1[0], ar1[1], ar1[2]);
-	      let da2 = new Date(ar2[0], ar2[1], ar2[2]);
-	      const diffDate = da1.getTime() - da2.getTime();
-	      const dateDays = Math.abs(diffDate / (1000 * 3600 * 24));
+		let da2 = new Date(ar2[0], ar2[1], ar2[2]);
+		const diffDate = da1.getTime() - da2.getTime();
+		const dateDays = Math.abs(diffDate / (1000 * 3600 * 24));
 		$('#rerooname').val(ar[0]);
 		$('#reroomtype2').val($('#reroomtype option:selected').text());
 		$('#recnt2').val($('#recnt').val());
 		$('#date3').val($('#date1').val());
 		$('#date4').val($('#date2').val());
-		$('#sum').val(ar[1]*dateDays);
+		$('#sum').val(ar[1] * dateDays);
 		$('#renum').val('');
 		$('#name').val('');
 		$('#mobile').val('');
 		$('#addreserve').val('예약등록')
-		
+
 	})
 	//예약 등록 버튼 클릭시
-	.on('click','#addreserve',function(){
-		if($('#addreserve').val()=='예약등록'&&$('#recnt2').val()!='0'
-				&&$('#name').val()!=''&&$('#mobile').val()!=''){
-			$.ajax({
-				type : 'get',
-				url : 'reserveadd',
-				data:{
-					reroomnum:$('#reroomlist option:selected').val(),
-					recnt:$('#recnt2').val(),
-					reprice:$('#sum').val(),
-					name:$('#name').val(),
-					mobile:$('#mobile').val(),
-					checkin:$('#date3').val(),
-					checkout:$('#date4').val(),
-					roomtype:$('#reroomtype option:selected').val()
-					
-				},
-				success : function() {
-					noreserve();
-					reserveroom();
-					$('#rerooname').val('');
-					$('#reroomtype2').val('');
-					$('#recnt2').val('');
-					$('#date3').val('');
-					$('#date4').val('');
-					$('#name').val('');
-					$('#mobile').val('');
-					$('#sum').val('');
+	.on(
+			'click',
+			'#addreserve',
+			function() {
+				if ($('#addreserve').val() == '예약등록'
+						&& $('#recnt2').val() != '0'
+						&& $('#name').val() != ''
+						&& $('#mobile').val() != ''
+						&& $('#recnt2').val() <= $('#reroomtype option:selected').val()) {
+					$.ajax({
+						type : 'get',
+						url : 'reserveadd',
+						data : {
+							reroomnum : $('#reroomlist option:selected').val(),
+							recnt : $('#recnt2').val(),
+							reprice : $('#sum').val(),
+							name : $('#name').val(),
+							mobile : $('#mobile').val(),
+							checkin : $('#date3').val(),
+							checkout : $('#date4').val(),
+							roomtype : $('#reroomtype option:selected').val()
+
+						},
+						success : function() {
+							noreserve();
+							reserveroom();
+							$('#rerooname').val('');
+							$('#reroomtype2').val('');
+							$('#recnt2').val('');
+							$('#date3').val('');
+							$('#date4').val('');
+							$('#name').val('');
+							$('#mobile').val('');
+							$('#sum').val('');
+						}
+					})//예약 수정하기
+				} else if ($('#addreserve').val() == '예약수정'
+						&& $('#recnt2').val() <= $(
+								'#reroomtype option:selected').val()
+						&& $('#recnt2').val() != '0' && $('#name').val() != ''
+						&& $('#mobile').val() != '') {
+					$.ajax({
+						type : 'get',
+						url : 'uptodate',
+						data : {
+							renum : $('#renum').val(),
+							name : $('#name').val(),
+							mobile : $('#mobile').val(),
+							min : $('#recnt2').val()
+
+						},//
+						success : function(data) {
+							noreserve();
+							reserveroom();
+							$('#renum').val('');
+							$('#rerooname').val('');
+							$('#reroomtype2').val('');
+							$('#recnt2').val('');
+							$('#date3').val('');
+							$('#date4').val('');
+							$('#name').val('');
+							$('#mobile').val('');
+							$('#sum').val('');
+							$('#addreserve').val('예약등록')
+						}
+					})
+				} else {
+					alert('예약내역을 다시 확인해주세요')
 				}
-			})//예약 수정하기
-		}else if(
-				$('#addreserve').val()=='예약수정'&&$('#recnt2').val()<=$('#reroomtype option:selected').val()
-				&&$('#recnt2').val()!='0'&&$('#name').val()!=''&&$('#mobile').val()!=''){
-			$.ajax({
-				type : 'get',
-				url : 'uptodate',
-				data:{
-					renum:$('#renum').val(),
-					name:$('#name').val(),
-					mobile:$('#mobile').val(),
-					min:$('#recnt2').val()
-					
-				},//
-				success : function(data) {
-					noreserve();
-					reserveroom();
-					$('#renum').val('');
-					$('#rerooname').val('');
-					$('#reroomtype2').val('');
-					$('#recnt2').val('');
-					$('#date3').val('');
-					$('#date4').val('');
-					$('#name').val('');
-					$('#mobile').val('');
-					$('#sum').val('');
-					$('#addreserve').val('예약등록')
-				}
-			})
-		}else {alert('예약내역을 다시 확인해주세요')}
-	})
-	.on('click','#deletereserve',function(){
+			}).on('click', '#deletereserve', function() {
 		$.ajax({
 			type : 'get',
 			url : 'cancel',
-			data:{
-				renum:$('#renum').val()
-				
+			data : {
+				renum : $('#renum').val()
+
 			},
 			success : function(data) {
 				noreserve();
@@ -483,7 +501,7 @@ option {
 		})
 	})
 	//비우기 눌렀을때
-	.on('click','#clearn2',function(){
+	.on('click', '#clearn2', function() {
 		$('#renum').val('');
 		$('#rerooname').val('');
 		$('#reroomtype2').val('');
@@ -496,41 +514,41 @@ option {
 		$('#addreserve').val('예약등록');
 	})
 	//이미예약된 객실 찾기
-	function reserveroom(){
+	function reserveroom() {
 		$.ajax({
 			type : 'get',
 			url : 'reserve',
-			data:{
-				roomtype:$('#reroomtype option:selected').val(),
-				cnt: $('#recnt').val(),
-				checkin:$('#date1').val(),
-				checkout:$('#date2').val()
-				
+			data : {
+				roomtype : $('#reroomtype option:selected').val(),
+				cnt : $('#recnt').val(),
+				checkin : $('#date1').val(),
+				checkout : $('#date2').val()
+
 			},
 			dataType : 'json',
 			success : function(data) {
 				$('#reroomlist2').empty();
 				for (let i = 0; i < data.length; i++) {
 					let jo = data[i];
-					let str = '<option value='+jo['renum']+'>'
-							+ jo['roomname'] + ' ' + jo['checkin']+'~'
-							+jo['checkout']+' '+jo['name']+ '</option>';
+					let str = '<option value='+jo['renum']+'>' + jo['roomname']
+							+ ' ' + jo['checkin'] + '~' + jo['checkout'] + ' '
+							+ jo['name'] + '</option>';
 					$('#reroomlist2').append(str);
 				}
 			}
 		})
 	}
 	//예약가능 객실 찾기
-	function noreserve(){
+	function noreserve() {
 		$.ajax({
 			type : 'get',
 			url : 'noreserve',
-			data:{
-				room_type:$('#reroomtype option:selected').val(),
-				cnt: $('#recnt').val(),
-				typename:$('#reroomtype').val(),
-				checkin:$('#date1').val(),
-				checkout:$('#date2').val()
+			data : {
+				room_type : $('#reroomtype option:selected').val(),
+				cnt : $('#recnt').val(),
+				typename : $('#reroomtype').val(),
+				checkin : $('#date1').val(),
+				checkout : $('#date2').val()
 			},
 			dataType : 'json',
 			success : function(data) {
@@ -538,8 +556,8 @@ option {
 				for (let i = 0; i < data.length; i++) {
 					let jo = data[i];
 					let str = '<option value='+jo['roomnum']+'>'
-							+ jo['roomname'] + ' ' + jo['price']+' '
-							+'숙박가능인원:'+jo['min']+'명'+ '</option>';
+							+ jo['roomname'] + ' ' + jo['price'] + ' '
+							+ '숙박가능인원:' + jo['min'] + '명' + '</option>';
 					$('#reroomlist').append(str);
 				}
 			}
